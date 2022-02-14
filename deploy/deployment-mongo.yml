@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-deployment
+  labels:
+    app: mongo-container
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-container
+  template:
+    metadata:
+      labels:
+        app: mongo-container
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+          - name: MONGO_INITDB_ROOT_USERNAME
+            value: "root"
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            value: "example"
+        resources:
+          limits:
+            cpu: "1"
+            memory: "95000Mi"
+          requests:
+            cpu: "0.5"
+            memory: "900Mi"
+       

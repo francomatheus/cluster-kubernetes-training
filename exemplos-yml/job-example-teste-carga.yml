@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: teste-carga
+spec:
+  template:
+    spec:
+      containers:
+      - name: vegeta-attack
+        image: peterevans/vegeta
+        command: ["sh"]
+        args: ["-c", "echo 'GET http://reactive-mvc:8080/reactive-mvc/v1/code/0' | vegeta attack -rate=1 -duration=1s | vegeta report"]
+      restartPolicy: Never
+ 

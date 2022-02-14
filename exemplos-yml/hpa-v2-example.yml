@@ -1,0 +1,22 @@
+kind: HorizontalPodAutoscaler
+apiVersion: autoscaling/v2alpha1
+metadata:
+  name: WebFrontend
+spec:
+  scaleTargetRef:
+    kind: ReplicationController
+    name: WebFrontend
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: 80
+  - type: Object
+    object:
+      target:
+        kind: Service
+        name: Frontend
+      metricName: hits-per-second
+      targetValue: 1k
